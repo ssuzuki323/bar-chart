@@ -1,7 +1,7 @@
-# HW3: Let's Make a Bar Chart
+# HW3: Implement a Bar Chart
 We are going to start with a gentle introduction to the fine art of bar chart construction. After going through the steps with a simple data set of cereals, you are then going to apply the same steps to a new and somewhat more complex data set. However, the overall process is the same for both data sets.
 
-## Initial setup
+## Initial setup:
 First, you need to get a local HTTP Server running on your machine. As we discussed in class, this will allow you to develop and test web programming assignments locally that require access to a data file on your system. The easiest option is through Python:
 
 1. Download Python (Python 3.x)
@@ -64,7 +64,7 @@ When you refresh the rendered HTML page, you will not really see much has change
 
 ![fig-2.PNG](fig-2.PNG)
 
-## Import and parse a .csv file
+## Import and parse a .csv file:
 
 Much of the data that we use when creating visualizations comes from comma-separated value (.csv) files. One is included in this repository for this tutorial: **a1-cereals.csv**. Each row in a csv is a data record, or datum. Each column is an attribute for that record. The first line in most csv files is the header, or list of column names, that are used for attributes for the records. The first few lines for the cereals file are given here:
 
@@ -91,7 +91,7 @@ Just to make sure everything looks okay, and do a quick sanity check, we output 
 
 ![fig-3.PNG](fig-3.PNG)
 
-## Create an SVG element for each record
+## Create an SVG element for each record:
 
 We are creating a bar chart based on our data, which means that we are creating a single rectangular shape for each record. We are going to start off by selecting all of the `rect` SVGs that are inside our `<svg></svg>` element. Of course, there are not any there just yet, but we are going to create some! We are going to let d3 know that we want to use our `data` variable as the data to populate this visualization by chaining a call to `.data(data)` onto our selection. Then, we are going chain another call - this time to `.enter()`, which means that we want to do something with all of the items in our data that does not yet have a visual representation in the DOM. Since we're initially creating the visualization, that's everything! We end by chaining a call to `.append("rect")`, which will actually create a rectangle for each record.
 
@@ -177,7 +177,7 @@ Finally, we need to set the vertical position. Right now, everything is set at 0
 
 ![fig-9.PNG](fig-9.PNG)
 
-## Redefine the spacing of elements to a predefined scale
+## Redefine the spacing of elements to a predefined scale:
 
 There was one aspect of the previous step that might have seemed particularly cumbersome. When we created the scaling for the height of our bars, we needed to inspect the data and determine what the maximum value was. Then, we hard-coded the ratio based on what we found. Do not get me wrong - it is always a good idea to inspect your data. But, what if we got an updated version of the file - do we really want to have to recode these values every time?
 
@@ -217,7 +217,7 @@ There is no alteration to the output, but this does help save us the headache of
 
 Do you think we could also use a custom scale for the x axis? Try it out on your own!
 
-## Add color and labels to SVG elements
+## Add color and labels to SVG elements:
 
 Up to this point, we have left our SVG `rect` elements with the default black fill. Right now, the only data encoding is the height of the bar. But, it is often useful to provide a secondary encoding to reinforce the point. Height is one channel, but as we are currently not using the color channel for any other types of data, we can provide a redundant encoding through color. The fill color of an SVG element is just another attribute: `fill="rgb(0,0,0)"` with an rgb, or red-green-blue value. This can be specified [several ways](https://www.w3.org/TR/SVGColor12/#sRGBcolor), but the most common is with three integer values from 0-255. If a fill is set to `rgb(0,0,0)`, then the fill color will be black. If the fill is `rgb(255,0,0)` then the fill color will be red. If it is `rgb(255,255,255)`, then the fill is white.
 
@@ -328,7 +328,8 @@ var yScale = d3.scaleLinear()
 
 ![fig-12.PNG](fig-12.PNG)
 
-# Apply these steps to a new data set
+# Apply these steps to a new data set:
+
 Included in this repository is a second data set, `pollution.csv`, that comes from the [Global Health Observatory data repository](http://apps.who.int/gho/data/view.main.SDGAIRBOD392v?lang=en). This data represents the ambient and household air pollution attributable death rate by country in 2016 (per 100,000 population, age-standardized).
 
 For full credit on this assignment, you will need to apply the steps in this tutorial to the pollution data set. This tutorial will get you most of the way there, but there is some additional work required. The pollution data set is not so simple, and requires some transformation - you cannot just swap the file loaded into the `d3.csv()` function (though that is a definite first step). For full credit on this assignment, you will need to do the following:
