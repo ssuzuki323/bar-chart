@@ -1,4 +1,4 @@
-# HW1: Let's Make a Bar Chart
+# HW3: Let's Make a Bar Chart
 We are going to start with a gentle introduction to the fine art of bar chart construction. After going through the steps with a simple data set of cereals, you are then going to apply the same steps to a new and somewhat more complex data set. However, the overall process is the same for both data sets.
 
 ## Initial setup
