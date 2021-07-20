@@ -1,5 +1,5 @@
 # HW3: Implement a Bar Chart
-We are going to start with a gentle introduction to the fine art of bar chart construction. After going through the steps with a simple data set of cereals, you are then going to apply the same steps to a new and somewhat more complex data set. However, the overall process is the same for both data sets.
+We are going to start with a gentle introduction to the fine art of bar chart construction. After going through the steps with a simple dataset of cereals, you are then going to apply the same steps to a new and somewhat more complex dataset. However, the overall process is the same for both datasets.
 
 ## Initial setup:
 First, you need to get a local HTTP Server running on your machine. As we discussed in class, this will allow you to develop and test web programming assignments locally that require access to a data file on your system. The easiest option is through Python:
@@ -221,7 +221,7 @@ Do you think we could also use a custom scale for the x axis? Try it out on your
 
 Up to this point, we have left our SVG `rect` elements with the default black fill. Right now, the only data encoding is the height of the bar. But, it is often useful to provide a secondary encoding to reinforce the point. Height is one channel, but as we are currently not using the color channel for any other types of data, we can provide a redundant encoding through color. The fill color of an SVG element is just another attribute: `fill="rgb(0,0,0)"` with an rgb, or red-green-blue value. This can be specified [several ways](https://www.w3.org/TR/SVGColor12/#sRGBcolor), but the most common is with three integer values from 0-255. If a fill is set to `rgb(0,0,0)`, then the fill color will be black. If the fill is `rgb(255,0,0)` then the fill color will be red. If it is `rgb(255,255,255)`, then the fill is white.
 
-As before, let's create a custom scale for generating color values. As before, our domain is from 0 to the max of the data set for the Calories attribute. There is a small difference, though, in that we are changing the range. We want the smaller values of Calories to be lighter in color, and the larger values to be darker. Therefore, our range is reversed in direction, going from 255 (lighter in shade) to 0 (darker in shade). As before, d3 can handle this conversion automatically, we just need to specify the range correctly in our new `colorScale` variable. Because we want these bars from light to dark, we want the red, green, and blue values to all increase at the same rate. So, in our attribute method chain for `fill`, we make a call to our `colorScale()` with the Calorie value for each record.
+As before, let's create a custom scale for generating color values. As before, our domain is from 0 to the max of the dataset for the Calories attribute. There is a small difference, though, in that we are changing the range. We want the smaller values of Calories to be lighter in color, and the larger values to be darker. Therefore, our range is reversed in direction, going from 255 (lighter in shade) to 0 (darker in shade). As before, d3 can handle this conversion automatically, we just need to specify the range correctly in our new `colorScale` variable. Because we want these bars from light to dark, we want the red, green, and blue values to all increase at the same rate. So, in our attribute method chain for `fill`, we make a call to our `colorScale()` with the Calorie value for each record.
 
 ```diff
 + var colorScale = d3.scaleLinear()
@@ -259,7 +259,7 @@ Let's go ahead and make one more change to really make the highest values stand 
 
 ![fig-11.PNG](fig-11.PNG)
 
-But, we still cannot really tell what each of these bars are. Which of these bars is a high calorie cereal, and which are lower? We are missing text labels! We're going to need to start by applying a new selection to our SVG, but this time for text. Much like our previous selection, we are going to need to select all of the text elements in the SVG and append new text elements for each record in our data set.
+But, we still cannot really tell what each of these bars are. Which of these bars is a high calorie cereal, and which are lower? We are missing text labels! We're going to need to start by applying a new selection to our SVG, but this time for text. Much like our previous selection, we are going to need to select all of the text elements in the SVG and append new text elements for each record in our dataset.
 
 ```diff
     else
@@ -328,14 +328,14 @@ var yScale = d3.scaleLinear()
 
 ![fig-12.PNG](fig-12.PNG)
 
-# Apply these steps to a new data set:
+# Apply these steps to a new dataset:
 
-Included in this repository is a second data set, `pollution.csv`, that comes from the [Global Health Observatory data repository](http://apps.who.int/gho/data/view.main.SDGAIRBOD392v?lang=en). This data represents the ambient and household air pollution attributable death rate by country in 2016 (per 100,000 population, age-standardized).
+Included in this repository is a second dataset, `pollution.csv`, that comes from the [Global Health Observatory data repository](http://apps.who.int/gho/data/view.main.SDGAIRBOD392v?lang=en). This data represents the ambient and household air pollution attributable death rate by country in 2016 (per 100,000 population, age-standardized).
 
-For full credit on this assignment, you will need to apply the steps in this tutorial to the pollution data set. This tutorial will get you most of the way there, but there is some additional work required. The pollution data set is not so simple, and requires some transformation - you cannot just swap the file loaded into the `d3.csv()` function (though that is a definite first step). For full credit on this assignment, you will need to do the following:
+For full credit on this assignment, you will need to apply the steps in this tutorial to the pollution dataset. This tutorial will get you most of the way there, but there is some additional work required. The pollution dataset is not so simple, and requires some transformation - you cannot just swap the file loaded into the `d3.csv()` function (though that is a definite first step). For full credit on this assignment, you will need to do the following:
 
-1. [22.5%] Load the pollution.csv data set. You will need to swap it for the previous cereals data set in the file loader.
-1. [22.5%] Create a bar for each record. There are far more records in this data set than in the cereals: one for each combination of a country and a disease. You will need to manipulate the size of the SVG elements, custom scales, and bar sizes significantly to produce a legible image. The height of the bar should be based on the mortality attribute for both sexes.
+1. [22.5%] Load the pollution.csv dataset. You will need to swap it for the previous cereals dataset in the file loader.
+1. [22.5%] Create a bar for each record. There are far more records in this dataset than in the cereals: one for each combination of a country and a disease. You will need to manipulate the size of the SVG elements, custom scales, and bar sizes significantly to produce a legible image. The height of the bar should be based on the mortality attribute for both sexes.
 1. [22.5%] Update the colors. Instead of ranging from white to black, update the bar color ranges so that they range from white to dark blue. As with the tutorial, highlight the top 20% of values (instead of the top 10%) in red.
 1. [22.5%] Update the labels. The labels should consist of a combination of the country name and disease. You will likely have to manipulate the spacing of all elements in order to accommodate these components.
 1. [10%] Nest and Rollup. Currently, each combination of country & disease is a separate record. However, using [nest and rollup](http://bl.ocks.org/phoebebright/raw/3176159/) we can transform the data to be a little more manageable. Using nest, we can specify a `key`, such as country, and manipulate the loaded data so that we get a separate array for each country. This will be an array containing a separate record for each disease. Then, using `rollup`, we can sum the values for each of the diseases so that we obtain a single mortality value for each country by sex. This reduces the number of bars that we are trying to create significantly. I recommend attempting this in a separate SVG rather than undoing all of your work for the previous steps. You should rollup the data so that each bar represents the total number of mortality cases for each country, for both sexes, across all diseases.
