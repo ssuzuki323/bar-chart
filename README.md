@@ -339,3 +339,7 @@ For full credit on this assignment, you will need to apply the steps in this tut
 1. [22.5%] Update the colors. Instead of ranging from white to black, update the bar color ranges so that they range from white to dark blue. As with the tutorial, highlight the top 20% of values (instead of the top 10%) in red.
 1. [22.5%] Update the labels. The labels should consist of a combination of the country name and disease. You will likely have to manipulate the spacing of all elements in order to accommodate these components.
 1. [10%] Nest and Rollup. Currently, each combination of country & disease is a separate record. However, using [nest and rollup](http://bl.ocks.org/phoebebright/raw/3176159/) we can transform the data to be a little more manageable. Using nest, we can specify a `key`, such as country, and manipulate the loaded data so that we get a separate array for each country. This will be an array containing a separate record for each disease. Then, using `rollup`, we can sum the values for each of the diseases so that we obtain a single mortality value for each country by sex. This reduces the number of bars that we are trying to create significantly. I recommend attempting this in a separate SVG rather than undoing all of your work for the previous steps. You should rollup the data so that each bar represents the total number of mortality cases for each country, for both sexes, across all diseases.
+
+## Acknowledgements: 
+
+This assignment was adapted from an assignment designed by [Dr. Alex Godwin](https://www.jagodwin.com).
