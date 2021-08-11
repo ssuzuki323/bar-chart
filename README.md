@@ -1,4 +1,4 @@
-# HW3: Implement a Bar Chart
+# HW2: Implement a Bar Chart
 We are going to start with a gentle introduction to the fine art of bar chart construction. After going through the steps with a simple dataset of cereals, you are then going to apply the same steps to a new and somewhat more complex dataset. However, the overall process is the same for both datasets.
 
 ## Initial setup:
