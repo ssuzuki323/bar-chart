@@ -2,8 +2,83 @@
 <html>
 <head>
   <title>D3 Tabular Vis</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 <body>
 <h1>Table Vis</h1>
+<script type="text/javascript">
+	var w = 3000;
+	var h = 1000;
+	var cellpadding = 2;
+	var svg=d3.select("body").append("svg")
+		.attr("width", w)
+		.attr("height", h);
+
+	d3.csv('pollution.csv')
+		.then(function(data){
+			console.log(data);
+
+			var nested = d3.nest()
+				.key(function(d){
+					return d['Country'];
+				})
+				.rollup(function(l){
+					return{"Mortality":
+						d3.sum(l, function(d){
+						return d['Both sexes'];
+					})}
+				})
+				.entries(data);
+			console.log(nested)
+
+			var yScale = d3.scaleLinear()
+				.domain([0, d3.max(nested, function(d){
+					return +d.value.Mortality;})
+				])
+				.range([0, h/3])
+
+			var colorScale = d3.scaleLinear()
+				.domain([0, d3.max(nested, function(d){
+					return +d.value.Mortality;
+				})])
+				.range([255, 0])
+
+			svg.selectAll("rect")
+				.data(nested)
+				.enter()
+				.append("rect")
+					.attr("width", w / nested.length - cellpadding)
+					.attr("height", h)
+					.attr("x", function(d, i){
+						return w / nested.length * i;
+					})
+					.attr("height", function(d){
+						return yScale(d.value.Mortality);
+					})
+					.attr("y", function(d){
+						return h/3 - yScale(d.value.Mortality);
+					})
+					.attr("fill", function(d){
+						var f = colorScale(d.value.Mortality);
+						if(f<=51)
+							return "rgb(" + 255 + ",0,0)";
+						else
+							return "rgb(" + f + "," + f + "," + (255+f)/2 + ")";
+					});
+
+
+			svg.selectAll("text")
+				.data(nested)
+				.enter()
+				.append("text")
+				.text(function(d){
+					return d.key;
+				})
+				.attr("transform", function(d, i){
+					return "translate(" + w / nested.length * i + ","+h/3+")"+"rotate(90)"
+				})
+			})
+
+	</script>
 </body>
 </html>
